@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 enum Pages {
     Home = 'home',
-    Detail = 'detail'
+    Detail = 'detail/:id'
 }
 
 export const routes: Routes = [
