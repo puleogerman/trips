@@ -25,13 +25,6 @@ export class TripsService {
     private errorService: ErrorService
     ) {}
 
-  // getAllTrips(): Observable<JsonResponse> {
-  //   return this.http.get<JsonResponse>(this.apiUrl + this.prefix)
-  //     .pipe(
-  //       catchError(this.errorService.handleError)
-  //     );
-  // }
-
   getAllTrips(
     sortBy?: string,
     sortOrder?: 'ASC' | 'DESC',

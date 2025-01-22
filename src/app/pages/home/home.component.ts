@@ -1,57 +1,71 @@
 import { Component, OnInit } from '@angular/core';
 import { Trip } from '../../models/trip';
-import { TripsService } from '../../services/trips.service';
 import { Router } from '@angular/router';
 import { CardComponent } from '../../components/card/card.component';
 import { FormsModule } from '@angular/forms';
-
-
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { loadTripOfTheDay, loadTrips, updateFilters } from '../../store/actions/trips.actions';
+import { TripsState } from '../../store/trips.state';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardComponent, FormsModule],
+  imports: [CardComponent, FormsModule, CommonModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-  trips: Trip[] = [];
-  tripOfTheDay!: Trip;
+  trips$: Observable<Trip[]>;
+  tripOfTheDay$: Observable<Trip | null>; 
+
   sortBy: string = '';
   sortOrder: 'ASC' | 'DESC' = 'ASC';
   titleFilter: string = '';
-
   constructor(
-    private tripService: TripsService,
-    private router: Router) {}
+    private store: Store<{ trips: TripsState }>,
+    private router: Router
+  ) {
+    this.trips$ = this.store.select((state) => state.trips.trips);
+    this.tripOfTheDay$ = this.store.select((state) => state.trips.tripOfTheDay)
+  }
 
   ngOnInit(): void {
-    this.getAllTrips();
-  }
-
-  getAllTrips() {
-    this.tripService.getAllTrips(this.sortBy, this.sortOrder, this.titleFilter).subscribe({
-      next: (data) => this.trips = data.items,
-      error: (err) => console.error('Error fetching trips:', err)
+    this.trips$.subscribe((trips) => {
+      if (!trips || trips.length === 0) {
+        this.store.dispatch(
+          loadTrips({ filters: { sortBy: this.sortBy , sortOrder: this.sortOrder, title: this.titleFilter } })
+        );
+      }
     });
   }
 
-  getTripOfTheDay(): void {
-    this.tripService.getTripOfTheDay().subscribe({
-      next: (data) => this.tripOfTheDay = data,
-      error: (err) => console.error('Error fetching trip of the day:', err)
-    });
+  fetchTrips(): void {
+    this.store.dispatch(
+      loadTrips({ filters: { sortBy: this.sortBy , sortOrder: this.sortOrder, title: this.titleFilter }  })
+    );
   }
 
   onSortChange(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.sortBy = selectElement.value;
-    this.getAllTrips();
+    this.store.dispatch(
+      updateFilters({ filters: { sortBy: this.sortBy , sortOrder: this.sortOrder, title: this.titleFilter }  })
+    );
+    this.store.dispatch(
+      loadTrips({ filters: { sortBy: this.sortBy , sortOrder: this.sortOrder, title: this.titleFilter }  })
+    );
   }
 
   toggleSortOrder(): void {
     this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
-    this.getAllTrips();
+    this.fetchTrips();
+  }
+
+  getTripOfTheDay(): void {
+    this.store.dispatch(loadTripOfTheDay());
+
   }
 
   navigateToDetail(tripId: string): void {

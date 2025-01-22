@@ -1,6 +1,6 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-  @if (tripOfTheDay) {
+  @if (tripOfTheDay$ | async; as tripOfTheDay) {
     <h1 class="text-3xl font-bold text-gray-800 mb-6">Trip of the day!</h1>
     <div class="flex items-center gap-4 mb-6">
       <app-card [trip]="tripOfTheDay" (cardClick)="navigateToDetail($event)"></app-card>
@@ -23,7 +23,7 @@
       [(ngModel)]="titleFilter"
     />
     <button
-      (click)="getAllTrips()"
+      (click)="fetchTrips()"
       class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
     >
       Apply Filter
@@ -34,11 +34,11 @@
       (change)="onSortChange($event)"
       class="p-2 border border-gray-300 rounded-md"
     >
-      <option value="">Sort By</option>
+      <option value="">-- Sort By --</option>
+      <option value="title">Title</option>
       <option value="price">Price</option>
       <option value="creationDate">Creation Date</option>
       <option value="rating">Rating</option>
-      <option value="verticalType">Vertical Type</option>
     </select>
   
     <button
@@ -49,9 +49,9 @@
     </button>
   </div>
   
-  @if (trips.length) {
+  @if (trips$ | async ) {
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    @for (trip of trips; track trip) {
+    @for (trip of trips$ | async; track trip) {
     <app-card [trip]="trip" (cardClick)="navigateToDetail($event)"></app-card>
     }
   </div>
