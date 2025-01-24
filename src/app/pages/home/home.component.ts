@@ -8,11 +8,12 @@ import { Store } from '@ngrx/store';
 import { loadTripOfTheDay, loadTrips, updateFilters } from '../../store/actions/trips.actions';
 import { TripsState } from '../../store/trips.state';
 import { CommonModule } from '@angular/common';
+import { WelcomeUserComponent } from '../../components/welcome-user/welcome-user.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardComponent, FormsModule, CommonModule],
+  imports: [CardComponent, FormsModule, CommonModule, WelcomeUserComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
