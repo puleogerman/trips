@@ -4,11 +4,13 @@ import { TripsService } from './trips.service';
 import { ErrorService } from './error.service';
 import { Trip } from '../models/trip';
 
+const mockEnvironment = {
+  apiUrl: 'https://iy3ipnv3uc.execute-api.eu-west-1.amazonaws.com/Prod/',
+};
+
 describe('TripsService', () => {
   let service: TripsService;
   let httpMock: HttpTestingController;
-
-  const mockApiUrl = 'https://iy3ipnv3uc.execute-api.eu-west-1.amazonaws.com/Prod/';
   const mockPrefix = 'v1/trips';
   const mockTrip: Trip = {
     id: '1',
@@ -30,9 +32,9 @@ describe('TripsService', () => {
       imports: [HttpClientTestingModule],
       providers: [
         TripsService,
-        { provide: 'apiUrl', useValue: mockApiUrl },
         { provide: 'prefix', useValue: mockPrefix },
         ErrorService,
+        { provide: 'environment', useValue: mockEnvironment }, 
       ],
     });
 
@@ -53,7 +55,7 @@ describe('TripsService', () => {
       });
 
     const req = httpMock.expectOne(
-      `${mockApiUrl}${mockPrefix}?sortBy=price&sortOrder=ASC&titleFilter=test&minPrice=50&maxPrice=200&minRating=4&tags=tag1,tag2`
+      `${mockEnvironment.apiUrl}${mockPrefix}?sortBy=price&sortOrder=ASC&titleFilter=test&minPrice=50&maxPrice=200&minRating=4&tags=tag1,tag2`
     );
     expect(req.request.method).toBe('GET');
 
@@ -65,7 +67,7 @@ describe('TripsService', () => {
       expect(trip).toEqual(mockTrip);
     });
 
-    const req = httpMock.expectOne(`${mockApiUrl}/${mockPrefix}/1`);
+    const req = httpMock.expectOne(`${mockEnvironment.apiUrl}/${mockPrefix}/1`);
     expect(req.request.method).toBe('GET');
 
     req.flush(mockTrip);
@@ -76,7 +78,7 @@ describe('TripsService', () => {
       expect(trip).toEqual(mockTrip);
     });
 
-    const req = httpMock.expectOne(`${mockApiUrl}/${mockPrefix}/random/trip-of-the-day`);
+    const req = httpMock.expectOne(`${mockEnvironment.apiUrl}/${mockPrefix}/random/trip-of-the-day`);
     expect(req.request.method).toBe('GET');
 
     req.flush(mockTrip);

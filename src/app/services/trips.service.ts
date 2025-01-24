@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Trip } from '../models/trip';
 import { ErrorService } from './error.service';
+import { environment } from '../../environments/environment.development';
 
 interface JsonResponse {
   items: Trip[],
@@ -17,7 +18,7 @@ interface JsonResponse {
 })
 export class TripsService {
 
-  private readonly apiUrl = "https://iy3ipnv3uc.execute-api.eu-west-1.amazonaws.com/Prod/";
+  private readonly apiUrl = environment.apiUrl;
   private readonly prefix = "v1/trips"
 
   constructor(
