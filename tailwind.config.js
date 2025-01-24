@@ -15,8 +15,9 @@ module.exports = {
           DEFAULT: '#F5ECD5', 
         },
         info: {
-          light: '#9ACBD0', // Light info color
-          DEFAULT: '#2973B2', // Info color
+          light: '#FBF5DD', // Light info color
+          DEFAULT: '#A6CDC6',
+          dark: '#16404D' // Info color
         },
         warning: {
           light: '#fde68a', // Light yellow

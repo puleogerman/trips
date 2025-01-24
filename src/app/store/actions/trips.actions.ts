@@ -3,7 +3,17 @@ import { Trip } from '../../models/trip';
 
 export const loadTrips = createAction(
   '[Trips] Load Trips',
-  props<{ filters: { sortBy: string; sortOrder: 'ASC' | 'DESC'; title: string } }>()
+  props<{
+    filters: {
+      sortBy?: string;
+      sortOrder?: 'ASC' | 'DESC';
+      titleFilter?: string;
+      minPrice?: number;
+      maxPrice?: number;
+      minRating?: number;
+      tags?: string;
+    };
+  }>()
 );
 
 export const loadTripsSuccess = createAction(
@@ -18,14 +28,22 @@ export const loadTripsFailure = createAction(
 
 export const updateFilters = createAction(
   '[Trips] Update Filters',
-  props<{ filters: { sortBy: string; sortOrder: 'ASC' | 'DESC'; title: string } }>()
+  props<{
+    filters: {
+      sortBy?: string;
+      sortOrder?: 'ASC' | 'DESC';
+      titleFilter?: string;
+      minPrice?: number;
+      maxPrice?: number;
+      minRating?: number;
+      tags?: string;
+    };
+  }>()
 );
 
 // trip of the day actions
 
-export const loadTripOfTheDay = createAction(
-  '[Trips] Load Trip of the Day'
-);
+export const loadTripOfTheDay = createAction('[Trips] Load Trip of the Day');
 
 export const loadTripOfThedaySuccess = createAction(
   '[Trips] Load Trip of the Day Success',

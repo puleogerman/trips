@@ -1,0 +1,82 @@
+<div class="bg-info-light p-6 rounded-lg shadow-md">
+    <h2 class="text-xl font-bold mb-4 text-gray-700">Filters & Sorting</h2>
+    <div class="flex flex-col gap-4">
+      <!-- Title Filter -->
+      <div class="flex items-center gap-4">
+        <input
+          type="text"
+          placeholder="Filter by title..."
+          class="p-2 border border-gray-300 rounded-md flex-1"
+          [(ngModel)]="titleFilter"
+        />
+      </div>
+  
+      <!-- Price Filters -->
+      <div class="flex flex-wrap gap-4 items-center">
+        <input
+          type="number"
+          placeholder="Min Price"
+          class="p-2 border border-gray-300 rounded-md flex-1 max-w-xs w-full sm:w-auto"
+          [(ngModel)]="minPrice"
+        />
+        <input
+          type="number"
+          placeholder="Max Price"
+          class="p-2 border border-gray-300 rounded-md flex-1 max-w-xs w-full sm:w-auto"
+          [(ngModel)]="maxPrice"
+        />
+      </div>
+  
+      <!-- Rating Filter -->
+      <div class="flex items-center gap-4">
+        <input
+          type="number"
+          placeholder="Min Rating"
+          min="0"
+          max="5"
+          class="p-2 border border-gray-300 rounded-md flex-1"
+          [(ngModel)]="minRating"
+        />
+      </div>
+  
+      <!-- Tags Filter -->
+      <div class="flex items-center gap-4">
+        <input
+          type="text"
+          placeholder="Filter by tags (comma-separated)"
+          class="p-2 border border-gray-300 rounded-md flex-1"
+          [(ngModel)]="tags"
+        />
+      </div>
+  
+      <!-- Apply Filter Button -->
+      <button
+        class="bg-primary hover:bg-info-dark text-white px-4 py-2 rounded-md"
+        (click)="applyFilters()"
+      >
+        Apply Filters
+      </button>
+  
+      <!-- Sort Options -->
+      <div class="flex items-center gap-4">
+        <select
+          class="p-2 border border-gray-300 rounded-md flex-1"
+          (change)="onSortChanged($event)"
+        >
+          <option value="">-- Sort By --</option>
+          <option value="title">Title</option>
+          <option value="price">Price</option>
+          <option value="creationDate">Creation Date</option>
+          <option value="rating">Rating</option>
+        </select>
+  
+        <button
+          (click)="toggleSortOrder()"
+          class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md"
+        >
+          Toggle Order: {{ sortOrder }}
+        </button>
+      </div>
+    </div>
+  </div>
+  

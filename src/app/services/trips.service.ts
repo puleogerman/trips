@@ -25,20 +25,40 @@ export class TripsService {
     private errorService: ErrorService
     ) {}
 
-  getAllTrips(
-    sortBy?: string,
-    sortOrder?: 'ASC' | 'DESC',
-    titleFilter: string = ''
-  ): Observable<JsonResponse> {
-    let params = new HttpParams();
-
-    if (sortBy && sortOrder) {
-      params = params.set('sortBy', sortBy).set('sortOrder', sortOrder);
-    }
-  
-    if (titleFilter) {
-      params = params.set('titleFilter', titleFilter);
-    }
+    getAllTrips(
+      sortBy?: string,
+      sortOrder?: 'ASC' | 'DESC',
+      titleFilter: string = '',
+      minPrice?: number,
+      maxPrice?: number,
+      minRating?: number,
+      tags?: string
+    ): Observable<JsonResponse> {
+      let params = new HttpParams();
+    
+      if (sortBy && sortOrder) {
+        params = params.set('sortBy', sortBy).set('sortOrder', sortOrder);
+      }
+    
+      if (titleFilter) {
+        params = params.set('titleFilter', titleFilter);
+      }
+    
+      if (minPrice != null) {
+        params = params.set('minPrice', minPrice.toString());
+      }
+    
+      if (maxPrice != null) {
+        params = params.set('maxPrice', maxPrice.toString());
+      }
+    
+      if (minRating != null) {
+        params = params.set('minRating', minRating.toString());
+      }
+    
+      if (tags) {
+        params = params.set('tags', tags);
+      }
 
     return this.http.get<JsonResponse>(`${this.apiUrl}${this.prefix}`, { params }).pipe(
       catchError(this.errorService.handleError)

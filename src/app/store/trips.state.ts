@@ -4,9 +4,13 @@ export interface TripsState {
   trips: Trip[]; 
   tripOfTheDay: Trip | null;
   filters: {
-    sortBy: string;
-    sortOrder: 'ASC' | 'DESC';
-    title: string;
+    sortBy?: string;
+    sortOrder?: 'ASC' | 'DESC';
+    titleFilter?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    minRating?: number;
+    tags?: string;
   };
 }
 
@@ -16,6 +20,11 @@ export const initialTripsState: TripsState = {
   filters: {
     sortBy: '',
     sortOrder: 'ASC',
-    title: '',
+    titleFilter: '',
+    minPrice: undefined,
+    maxPrice: undefined,
+    minRating: undefined,
+    tags: '',
+
   },
 };
