@@ -17,7 +17,7 @@ interface JsonResponse {
 })
 export class TripsService {
 
-  private readonly apiUrl = "https://iy3ipnv3uc.execute-api.eu-west-1.amazonaws.com/Prod/"; // Base URL for trips
+  private readonly apiUrl = "https://iy3ipnv3uc.execute-api.eu-west-1.amazonaws.com/Prod/";
   private readonly prefix = "v1/trips"
 
   constructor(

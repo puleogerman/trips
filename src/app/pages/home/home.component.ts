@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Trip } from '../../models/trip';
 import { Router } from '@angular/router';
 import { CardComponent } from '../../components/card/card.component';
-import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import {
@@ -17,7 +16,7 @@ import { TripFiltersComponent } from '../../components/trip-filters/trip-filters
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardComponent, FormsModule, CommonModule, WelcomeUserComponent, TripFiltersComponent],
+  imports: [CardComponent, CommonModule, WelcomeUserComponent, TripFiltersComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
