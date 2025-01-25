@@ -1,42 +1,68 @@
+<div class="grid grid-cols-1 lg:grid-cols-[30%_70%] h-full">
+  <!-- Left Sidebar: Welcome Component -->
+  <app-welcome-user
+    class="hidden lg:block bg-primary-light text-primary-dark p-6"
+  ></app-welcome-user>
 @if (trip) {
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <button
-    class="mb-4 px-4 py-2 bg-blue-500 text-white rounded shadow hover:bg-blue-600"
-    (click)="navigateToHome()"
-  >
-    Back to Home
-  </button>
-  <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-    <img
-      [src]="trip.imageUrl"
-      alt="{{ trip.title }}"
-      class="w-full h-64 object-cover rounded mb-4"
-    />
-    <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ trip.title }}</h1>
-    <p class="text-gray-600 mb-2">{{ trip.description }}</p>
-    <p class="text-gray-600 mb-2">
-      Price: <span class="font-medium">${{ trip.price }}</span>
-    </p>
-    <p class="text-gray-600 mb-2">
-      Rating: <span class="font-medium">{{ trip.rating }}</span>
-    </p>
-    <p class="text-gray-600 mb-2">
-      Number of ratings: <span class="font-medium">{{ trip.nrOfRatings }}</span>
-    </p>
-    <p class="text-gray-600 mb-2">
-      co2: <span class="font-medium">{{ trip.co2 }}</span>
-    </p>
-    <div class="flex flex-wrap gap-2 mt-4">
-      @for (tag of trip.tags; track tag) {
-        <span
-          class="flex items-center gap-1 bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-sm"
-        >
-          {{ tag }}
-        </span>
-      }
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <button
+      class="mb-4 px-4 py-2 bg-secondary-light rounded shadow hover:bg-secondary"
+      (click)="navigateToHome()"
+    >
+      Return to Home page
+    </button>
+    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+      <!-- Image with rounded corners -->
+      <img
+        [src]="trip.imageUrl"
+        alt="{{ trip.title }}"
+        class="w-full h-64 object-cover rounded-lg mb-4"
+      />
+      <!-- Main content container -->
+      <div class="bg-primary text-white p-6 rounded-lg">
+        <h1 class="text-3xl font-bold mb-4">{{ trip.title }}</h1>
+        <p class="mb-2">{{ trip.description }}</p>
+        <p class="mb-2">
+          Price: <span class="font-medium">${{ trip.price }}</span>
+        </p>
+        <p class="mb-2">
+          Rating: <span class="font-medium">{{ trip.rating }}</span>
+        </p>
+        <p class="mb-2">
+          Number of ratings: <span class="font-medium">{{ trip.nrOfRatings }}</span>
+        </p>
+        <p class="mb-2">
+          co2: <span class="font-medium">{{ trip.co2 }}</span>
+        </p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          @for (tag of trip.tags; track tag) {
+            <span
+              class="flex items-center gap-1 bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-sm"
+            >
+              {{ tag }}
+            </span>
+          }
+        </div>
+        <!-- Action buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 mt-6">
+          <button
+            class="px-4 py-2 bg-green-500 text-white rounded shadow hover:bg-green-600"
+            (click)="onBookTrip()"
+          >
+            Book Trip
+          </button>
+          <button
+            class="px-4 py-2 bg-yellow-500 text-white rounded shadow hover:bg-yellow-600"
+            (click)="onSaveToFavorites()"
+          >
+            Save to Favorites
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+  
 } @else {
-<h3>fetching detils...</h3>
+<h3>Sorry, we are having problems getting the trip details</h3>
 }
+</div>
