@@ -39,6 +39,11 @@
     </div>
 
       <!-- Trips Grid -->
+      <app-pagination
+      [currentPage]="(currentPage$ | async) ?? 0"
+      [totalPages]="(totalPages$ | async) ?? 0"
+      (pageChange)="onPageChange($event)"
+    ></app-pagination>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       @for (trip of trips$ | async; track trip) {
       <app-card
@@ -46,6 +51,7 @@
         (cardClick)="navigateToDetail($event)"
       ></app-card>
       }
+ 
     </div>
   </div>
 </div>

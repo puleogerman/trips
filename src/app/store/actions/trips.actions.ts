@@ -4,6 +4,7 @@ import { Trip } from '../../models/trip';
 export const loadTrips = createAction(
   '[Trips] Load Trips',
   props<{
+    page: number;
     filters: {
       sortBy?: string;
       sortOrder?: 'ASC' | 'DESC';
@@ -18,7 +19,12 @@ export const loadTrips = createAction(
 
 export const loadTripsSuccess = createAction(
   '[Trips] Load Trips Success',
-  props<{ trips: Trip[] }>()
+  props<{
+    trips: Trip[];
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+  }>()
 );
 
 export const loadTripsFailure = createAction(
@@ -29,6 +35,7 @@ export const loadTripsFailure = createAction(
 export const updateFilters = createAction(
   '[Trips] Update Filters',
   props<{
+    page: number;
     filters: {
       sortBy?: string;
       sortOrder?: 'ASC' | 'DESC';

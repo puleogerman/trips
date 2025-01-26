@@ -6,21 +6,26 @@ import { initialTripsState } from '../trips.state';
 
 export const tripsReducer = createReducer(
   initialTripsState,
-  on(loadTrips, (state, { filters }) => ({
+  on(loadTrips, (state, { page, filters }) => ({
     ...state,
     filters,
+    currentPage: page,
   })),
-  on(loadTripsSuccess, (state, { trips }) => ({
+  on(loadTripsSuccess, (state, { trips, currentPage, totalPages, totalItems }) => ({
     ...state,
     trips,
+    currentPage,
+    totalPages,
+    totalItems
   })),
   on(loadTripsFailure, (state, { error }) => ({
     ...state,
     error,
   })),
-  on(updateFilters, (state, { filters }) => ({
+  on(updateFilters, (state, { page, filters }) => ({
     ...state,
     filters,
+    currentPage: page,
   })),
 
 // Trip of the day

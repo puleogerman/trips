@@ -11,9 +11,14 @@ export class TripsEffects {
   loadTrips$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadTrips),
-      mergeMap(({ filters }) =>
-        this.tripsService.getAllTrips(filters.sortBy, filters.sortOrder, filters.titleFilter, filters.minPrice, filters.maxPrice, filters.minRating, filters.tags).pipe(
-          map((data) => loadTripsSuccess({ trips: data.items })),
+      mergeMap(({ page, filters }) =>
+        this.tripsService.getAllTrips(page, filters.sortBy, filters.sortOrder, filters.titleFilter, filters.minPrice, filters.maxPrice, filters.minRating, filters.tags).pipe(
+          map((data) => loadTripsSuccess({ 
+            trips: data.items,
+            currentPage: data.page,
+            totalPages: Math.ceil(data.total / data.limit),
+            totalItems: data.total
+          })),
           catchError((error) => of(loadTripsFailure({ error: error.message })))
         )
       )

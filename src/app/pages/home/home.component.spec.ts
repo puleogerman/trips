@@ -45,6 +45,7 @@ describe('HomeComponent', () => {
 
     expect(dispatchSpy).toHaveBeenCalledWith(
       loadTrips({
+        page: 1,
         filters: {},
       })
     );
@@ -60,6 +61,7 @@ describe('HomeComponent', () => {
 
     expect(dispatchSpy).not.toHaveBeenCalledWith(
       loadTrips({
+        page: 1,
         filters: {},
       })
     );

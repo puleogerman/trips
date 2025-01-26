@@ -48,14 +48,14 @@ describe('TripsService', () => {
 
   it('should fetch all trips with parameters', () => {
     service
-      .getAllTrips('price', 'ASC', 'test', 50, 200, 4, 'tag1,tag2')
+      .getAllTrips(1, 'price', 'ASC', 'test', 50, 200, 4, 'tag1,tag2')
       .subscribe((response) => {
         expect(response.items.length).toBe(1);
         expect(response.items[0]).toEqual(mockTrip);
       });
 
     const req = httpMock.expectOne(
-      `${mockEnvironment.apiUrl}${mockPrefix}?sortBy=price&sortOrder=ASC&titleFilter=test&minPrice=50&maxPrice=200&minRating=4&tags=tag1,tag2`
+      `${mockEnvironment.apiUrl}${mockPrefix}?page=1&sortBy=price&sortOrder=ASC&titleFilter=test&minPrice=50&maxPrice=200&minRating=4&tags=tag1,tag2`
     );
     expect(req.request.method).toBe('GET');
 

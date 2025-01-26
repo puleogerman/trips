@@ -12,6 +12,9 @@ export interface TripsState {
     minRating?: number;
     tags?: string;
   };
+  currentPage: number;
+  totalPages: number;
+  totalItems?: number;
 }
 
 export const initialTripsState: TripsState = {
@@ -27,4 +30,7 @@ export const initialTripsState: TripsState = {
     tags: '',
 
   },
+  currentPage: 1,
+  totalPages: 0,
+  totalItems: 0
 };

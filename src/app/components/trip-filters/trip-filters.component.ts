@@ -23,55 +23,46 @@ export class TripFiltersComponent {
   sortOrder: 'ASC' | 'DESC' = 'ASC';
   sortBy: string = '';
 
+  currentPage: number = 1;
+
   applyFilters(): void {
-    this.store.dispatch(
-      loadTrips({
-        filters: {
-          sortBy: this.sortBy,
-          sortOrder: this.sortOrder,
-          titleFilter: this.titleFilter,
-          minPrice: this.minPrice,
-          maxPrice: this.maxPrice,
-          minRating: this.minRating,
-          tags: this.tags,
-        },
-      })
-    );
+    this.currentPage = 1; // Reset to the first page when filters are applied
+    this.dispatchFilters();
   }
 
   onSortChanged(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.sortBy = selectElement.value;
-    this.store.dispatch(
-      updateFilters({
-        filters: {
-          sortBy: this.sortBy,
-          sortOrder: this.sortOrder,
-          titleFilter: this.titleFilter,
-          minPrice: this.minPrice,
-          maxPrice: this.maxPrice,
-          minRating: this.minRating,
-          tags: this.tags,
-        },
-      })
-    );
-    this.store.dispatch(
-      loadTrips({
-        filters: {
-          sortBy: this.sortBy,
-          sortOrder: this.sortOrder,
-          titleFilter: this.titleFilter,
-          minPrice: this.minPrice,
-          maxPrice: this.maxPrice,
-          minRating: this.minRating,
-          tags: this.tags,
-        },
-      })
-    );
+    this.currentPage = 1; // Reset to the first page when sort changes
+    this.dispatchFilters();
   }
 
   toggleSortOrder(): void {
     this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
-    this.applyFilters();
+    this.currentPage = 1; // Reset to the first page when sort order changes
+    this.dispatchFilters();
+  }
+
+  private dispatchFilters(): void {
+    const filters = {
+      sortBy: this.sortBy,
+      sortOrder: this.sortOrder,
+      titleFilter: this.titleFilter,
+      minPrice: this.minPrice,
+      maxPrice: this.maxPrice,
+      minRating: this.minRating,
+      tags: this.tags,
+    };
+
+    // Update filters in the store
+    this.store.dispatch(updateFilters({ page: this.currentPage, filters }));
+
+    // Load trips with the current filters and pagination
+    this.store.dispatch(
+      loadTrips({
+        filters: { ...filters },
+        page: this.currentPage,
+      })
+    );
   }
 }

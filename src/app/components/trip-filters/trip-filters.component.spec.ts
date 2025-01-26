@@ -47,6 +47,7 @@ describe('TripFiltersComponent', () => {
 
     expect(store.dispatch).toHaveBeenCalledWith(
       loadTrips({
+        page: 1,
         filters: {
           titleFilter: 'Tokyo',
           minPrice: 100,
@@ -70,6 +71,7 @@ describe('TripFiltersComponent', () => {
 
     expect(store.dispatch).toHaveBeenCalledWith(
       updateFilters({
+        page:1,
         filters: {
           sortBy: 'rating',
           sortOrder: 'DESC',
@@ -84,6 +86,7 @@ describe('TripFiltersComponent', () => {
 
     expect(store.dispatch).toHaveBeenCalledWith(
       loadTrips({
+        page: 1,
         filters: {
           sortBy: 'rating',
           sortOrder: 'DESC',
@@ -97,18 +100,26 @@ describe('TripFiltersComponent', () => {
     );
   });
 
-  it('should toggle sortOrder and call applyFilters when toggleSortOrder is called', () => {
-    spyOn(component, 'applyFilters');
-
+  it('should toggle sortOrder, reset currentPage, and call dispatchFilters when toggleSortOrder is called', () => {
+    // Arrange
+    spyOn<any>(component, 'dispatchFilters');
     component.sortOrder = 'ASC';
+    component.currentPage = 3;
+  
+    // Act: Call toggleSortOrder for the first time
     component.toggleSortOrder();
-
+  
+    // Assert: Verify sortOrder, currentPage reset, and dispatchFilters called
     expect(component.sortOrder).toBe('DESC');
-    expect(component.applyFilters).toHaveBeenCalled();
-
+    expect(component.currentPage).toBe(1);
+    expect(component['dispatchFilters']).toHaveBeenCalled();
+  
+    // Act: Call toggleSortOrder again
     component.toggleSortOrder();
-
+  
+    // Assert: Verify toggled sortOrder, currentPage reset, and dispatchFilters call count
     expect(component.sortOrder).toBe('ASC');
-    expect(component.applyFilters).toHaveBeenCalledTimes(2);
+    expect(component.currentPage).toBe(1);
+    expect(component['dispatchFilters']).toHaveBeenCalledTimes(2);
   });
 });

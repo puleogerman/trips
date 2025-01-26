@@ -27,6 +27,7 @@ export class TripsService {
     ) {}
 
     getAllTrips(
+      page: number = 1,
       sortBy?: string,
       sortOrder?: 'ASC' | 'DESC',
       titleFilter: string = '',
@@ -35,7 +36,7 @@ export class TripsService {
       minRating?: number,
       tags?: string
     ): Observable<JsonResponse> {
-      let params = new HttpParams();
+      let params = new HttpParams().set('page', page.toString());
     
       if (sortBy && sortOrder) {
         params = params.set('sortBy', sortBy).set('sortOrder', sortOrder);
