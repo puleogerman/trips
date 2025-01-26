@@ -43,7 +43,7 @@ describe('CardComponent', () => {
   });
 
   it('should emit trip ID on card click', () => {
-    spyOn(component.cardClick, 'emit'); // Spy on the EventEmitter
+    spyOn(component.cardClick, 'emit'); 
     component.trip = mockTrip;
     fixture.detectChanges();
 
@@ -56,9 +56,7 @@ describe('CardComponent', () => {
     spyOn(component, 'onCardClick');
     component.trip = mockTrip;
     fixture.detectChanges();
-
-    // Simulate a click on the card element
-    const cardElement = fixture.debugElement.query(By.css('div')); // Assuming the card element is a div
+    const cardElement = fixture.debugElement.query(By.css('div'));
     cardElement.triggerEventHandler('click', null);
 
     expect(component.onCardClick).toHaveBeenCalled();

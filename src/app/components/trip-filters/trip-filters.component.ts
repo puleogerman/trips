@@ -39,7 +39,7 @@ export class TripFiltersComponent {
 
   toggleSortOrder(): void {
     this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
-    this.currentPage = 1; // Reset to the first page when sort order changes
+    this.currentPage = 1; 
     this.dispatchFilters();
   }
 
@@ -57,7 +57,6 @@ export class TripFiltersComponent {
     // Update filters in the store
     this.store.dispatch(updateFilters({ page: this.currentPage, filters }));
 
-    // Load trips with the current filters and pagination
     this.store.dispatch(
       loadTrips({
         filters: { ...filters },

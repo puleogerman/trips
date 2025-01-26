@@ -1,19 +1,19 @@
 <div class="grid grid-cols-1 lg:grid-cols-[30%_70%] h-full">
-  <!-- Left Sidebar: Welcome Component -->
   <app-welcome-user
     class="hidden lg:block bg-primary-light text-primary-dark p-6"
   ></app-welcome-user>
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
-    <!-- Button -->
     <button
       class="mb-4 px-4 py-2 bg-secondary-light rounded shadow hover:bg-secondary"
       (click)="navigateToHome()"
     >
       Return to Home page
     </button>
-@if (trip) {
+    @if (trip) {
     <!-- Trip Card -->
-    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 relative">
+    <div
+      class="bg-white p-6 rounded-lg shadow-md border border-gray-200 relative"
+    >
       <!-- Badge -->
       <span
         class="absolute top-2 right-2 px-3 py-1 text-sm font-semibold text-white rounded-full shadow-lg"
@@ -25,15 +25,13 @@
       >
         {{ trip.scoreBadge | uppercase }}
       </span>
-  
-      <!-- Image -->
+
       <img
         [src]="trip.imageUrl"
         alt="{{ trip.title }}"
         class="w-full h-64 object-cover rounded-lg mb-4"
       />
-  
-      <!-- Main Content -->
+
       <div class="bg-primary text-white p-6 rounded-lg">
         <h1 class="text-3xl font-bold mb-4">{{ trip.title }}</h1>
         <p class="mb-2">{{ trip.description }}</p>
@@ -44,24 +42,23 @@
           Rating: <span class="font-medium">{{ trip.rating }}</span>
         </p>
         <p class="mb-2">
-          Number of ratings: <span class="font-medium">{{ trip.nrOfRatings }}</span>
+          Number of ratings:
+          <span class="font-medium">{{ trip.nrOfRatings }}</span>
         </p>
         <p class="mb-2">
           CO2: <span class="font-medium">{{ trip.co2 }}</span>
         </p>
-  
-        <!-- Tags -->
+
         <div class="flex flex-wrap gap-2 mt-4">
           @for (tag of trip.tags; track tag) {
-            <span
-              class="flex items-center gap-1 bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-sm"
-            >
-              {{ tag }}
-            </span>
+          <span
+            class="flex items-center gap-1 bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-sm"
+          >
+            {{ tag }}
+          </span>
           }
         </div>
-  
-        <!-- Action Buttons -->
+
         <div class="flex flex-col sm:flex-row gap-4 mt-6">
           <button
             class="px-4 py-2 bg-green-500 text-white rounded shadow hover:bg-green-600"
@@ -78,8 +75,8 @@
         </div>
       </div>
     </div>
-  } @else {
+    } @else {
     <h3>Sorry, we are having problems getting the trip details</h3>
-  }
-</div>
+    }
+  </div>
 </div>

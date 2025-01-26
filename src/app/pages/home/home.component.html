@@ -1,10 +1,8 @@
 <div class="grid grid-cols-1 lg:grid-cols-[30%_70%] h-full">
-  <!-- Left Sidebar: Welcome Component -->
   <app-welcome-user
     class="hidden lg:block bg-primary-light text-primary-dark p-6"
   ></app-welcome-user>
 
-  <!-- Main Content Area -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
       <!-- Trip of the Day Section -->
@@ -34,24 +32,19 @@
         }
       </div>
       <!-- Filters Section -->
-      <app-trip-filters
-      ></app-trip-filters>
+      <app-trip-filters></app-trip-filters>
     </div>
 
-      <!-- Trips Grid -->
-      <app-pagination
+    <!-- Trips Grid -->
+    <app-pagination
       [currentPage]="(currentPage$ | async) ?? 0"
       [totalPages]="(totalPages$ | async) ?? 0"
       (pageChange)="onPageChange($event)"
     ></app-pagination>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       @for (trip of trips$ | async; track trip) {
-      <app-card
-        [trip]="trip"
-        (cardClick)="navigateToDetail($event)"
-      ></app-card>
+      <app-card [trip]="trip" (cardClick)="navigateToDetail($event)"></app-card>
       }
- 
     </div>
   </div>
 </div>
