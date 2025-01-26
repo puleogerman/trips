@@ -4,10 +4,7 @@ import { Router } from '@angular/router';
 import { CardComponent } from '../../components/card/card.component';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import {
-  loadTripOfTheDay,
-  loadTrips,
-} from '../../store/actions/trips.actions';
+import { loadTripOfTheDay, loadTrips } from '../../store/actions/trips.actions';
 import { TripsState } from '../../store/trips.state';
 import { CommonModule } from '@angular/common';
 import { WelcomeUserComponent } from '../../components/welcome-user/welcome-user.component';
@@ -17,7 +14,13 @@ import { PaginationComponent } from '../../components/pagination/pagination.comp
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CardComponent, CommonModule, WelcomeUserComponent, TripFiltersComponent, PaginationComponent],
+  imports: [
+    CardComponent,
+    CommonModule,
+    WelcomeUserComponent,
+    TripFiltersComponent,
+    PaginationComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -35,7 +38,6 @@ export class HomeComponent implements OnInit {
     this.tripOfTheDay$ = this.store.select((state) => state.trips.tripOfTheDay);
     this.currentPage$ = this.store.select((state) => state.trips.currentPage);
     this.totalPages$ = this.store.select((state) => state.trips.totalPages);
-
   }
 
   ngOnInit(): void {
@@ -52,9 +54,11 @@ export class HomeComponent implements OnInit {
   }
 
   onPageChange(page: number): void {
-    this.store.select((state) => state.trips.filters).subscribe((filters) => {
-      this.store.dispatch(loadTrips({ page, filters }));
-    });
+    this.store
+      .select((state) => state.trips.filters)
+      .subscribe((filters) => {
+        this.store.dispatch(loadTrips({ page, filters }));
+      });
   }
 
   getTripOfTheDay(): void {

@@ -3,22 +3,37 @@
   <app-welcome-user
     class="hidden lg:block bg-primary-light text-primary-dark p-6"
   ></app-welcome-user>
-@if (trip) {
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
+    <!-- Button -->
     <button
       class="mb-4 px-4 py-2 bg-secondary-light rounded shadow hover:bg-secondary"
       (click)="navigateToHome()"
     >
       Return to Home page
     </button>
-    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-      <!-- Image with rounded corners -->
+@if (trip) {
+    <!-- Trip Card -->
+    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 relative">
+      <!-- Badge -->
+      <span
+        class="absolute top-2 right-2 px-3 py-1 text-sm font-semibold text-white rounded-full shadow-lg"
+        [ngClass]="{
+          'bg-gray-500': trip.scoreBadge === 'average',
+          'bg-green-500': trip.scoreBadge === 'good',
+          'bg-blue-500': trip.scoreBadge === 'awesome'
+        }"
+      >
+        {{ trip.scoreBadge | uppercase }}
+      </span>
+  
+      <!-- Image -->
       <img
         [src]="trip.imageUrl"
         alt="{{ trip.title }}"
         class="w-full h-64 object-cover rounded-lg mb-4"
       />
-      <!-- Main content container -->
+  
+      <!-- Main Content -->
       <div class="bg-primary text-white p-6 rounded-lg">
         <h1 class="text-3xl font-bold mb-4">{{ trip.title }}</h1>
         <p class="mb-2">{{ trip.description }}</p>
@@ -32,8 +47,10 @@
           Number of ratings: <span class="font-medium">{{ trip.nrOfRatings }}</span>
         </p>
         <p class="mb-2">
-          co2: <span class="font-medium">{{ trip.co2 }}</span>
+          CO2: <span class="font-medium">{{ trip.co2 }}</span>
         </p>
+  
+        <!-- Tags -->
         <div class="flex flex-wrap gap-2 mt-4">
           @for (tag of trip.tags; track tag) {
             <span
@@ -43,7 +60,8 @@
             </span>
           }
         </div>
-        <!-- Action buttons -->
+  
+        <!-- Action Buttons -->
         <div class="flex flex-col sm:flex-row gap-4 mt-6">
           <button
             class="px-4 py-2 bg-green-500 text-white rounded shadow hover:bg-green-600"
@@ -60,9 +78,8 @@
         </div>
       </div>
     </div>
-  </div>
-  
-} @else {
-<h3>Sorry, we are having problems getting the trip details</h3>
-}
+  } @else {
+    <h3>Sorry, we are having problems getting the trip details</h3>
+  }
+</div>
 </div>

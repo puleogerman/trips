@@ -10,5 +10,6 @@ export interface Trip {
     co2: number,
     thumbnailUrl: string,
     imageUrl: string,
-    creationDate: Date
+    creationDate: Date,
+    scoreBadge?: string,
 }

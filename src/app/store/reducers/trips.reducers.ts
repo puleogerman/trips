@@ -3,6 +3,7 @@ import { loadTrips, loadTripsSuccess,
     loadTripsFailure, updateFilters, loadTripOfTheDay, loadTripOfThedaySuccess, loadTripOfThedayFailure
  } from '../actions/trips.actions';
 import { initialTripsState } from '../trips.state';
+import { calculateTripScore } from '../../helpers/badge-logic';
 
 export const tripsReducer = createReducer(
   initialTripsState,
@@ -13,7 +14,10 @@ export const tripsReducer = createReducer(
   })),
   on(loadTripsSuccess, (state, { trips, currentPage, totalPages, totalItems }) => ({
     ...state,
-    trips,
+    trips: trips.map((trip) => ({
+      ...trip,
+      scoreBadge: calculateTripScore(trip.rating, trip.nrOfRatings, trip.co2),
+    })),
     currentPage,
     totalPages,
     totalItems
@@ -35,7 +39,10 @@ on(loadTripOfTheDay, (state) => ({
   })),
   on(loadTripOfThedaySuccess, (state, { trip }) => ({
     ...state,
-    tripOfTheDay: trip,
+    tripOfTheDay: {
+      ...trip,
+      scoreBadge: calculateTripScore(trip.rating, trip.nrOfRatings, trip.co2),
+    },
   })),
   on(loadTripOfThedayFailure, (state, { error }) => ({
     ...state,
