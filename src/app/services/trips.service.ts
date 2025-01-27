@@ -27,7 +27,7 @@ export class TripsService {
     ) {}
 
     getAllTrips(
-      page: number = 1,
+      page: number,
       sortBy?: string,
       sortOrder?: 'ASC' | 'DESC',
       titleFilter: string = '',

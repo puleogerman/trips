@@ -26,24 +26,23 @@ export class TripFiltersComponent {
   currentPage: number = 1;
 
   applyFilters(): void {
-    this.currentPage = 1; // Reset to the first page when filters are applied
     this.dispatchFilters();
   }
 
   onSortChanged(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     this.sortBy = selectElement.value;
-    this.currentPage = 1; // Reset to the first page when sort changes
     this.dispatchFilters();
   }
 
   toggleSortOrder(): void {
     this.sortOrder = this.sortOrder === 'ASC' ? 'DESC' : 'ASC';
-    this.currentPage = 1; 
     this.dispatchFilters();
   }
 
   private dispatchFilters(): void {
+    this.currentPage = 1;
+    
     const filters = {
       sortBy: this.sortBy,
       sortOrder: this.sortOrder,
@@ -54,13 +53,10 @@ export class TripFiltersComponent {
       tags: this.tags,
     };
 
-    // Update filters in the store
-    this.store.dispatch(updateFilters({ page: this.currentPage, filters }));
-
     this.store.dispatch(
       loadTrips({
         filters: { ...filters },
-        page: this.currentPage,
+        page: 1,
       })
     );
   }

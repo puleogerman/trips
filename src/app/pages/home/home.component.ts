@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Trip } from '../../models/trip';
 import { Router } from '@angular/router';
 import { CardComponent } from '../../components/card/card.component';
-import { Observable } from 'rxjs';
+import { Observable, distinctUntilChanged } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { loadTripOfTheDay, loadTrips } from '../../store/actions/trips.actions';
 import { TripsState } from '../../store/trips.state';
@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit {
   onPageChange(page: number): void {
     this.store
       .select((state) => state.trips.filters)
+      .pipe(distinctUntilChanged())
       .subscribe((filters) => {
         this.store.dispatch(loadTrips({ page, filters }));
       });
